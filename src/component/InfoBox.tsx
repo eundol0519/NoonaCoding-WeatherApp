@@ -1,6 +1,14 @@
-import React from "react";
+interface PropsType {
+  cityImage: string;
+  data: {
+    name: string;
+    celsius: number;
+    fahrenheit: number;
+    weather: string;
+  };
+}
 
-const InfoBox = ({ cityImage, data }) => {
+const InfoBox = ({ cityImage, data }: PropsType) => {
   return (
     <div className="infoWrap">
       <img src={cityImage} alt="locationImg" />

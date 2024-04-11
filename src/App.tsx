@@ -16,9 +16,22 @@ import Button from "./element/Button";
   6. 데이터를 불러오는 동안에는 로딩 스피너가 돈다.
 */
 
+interface DataType {
+  name: string;
+  celsius: number;
+  fahrenheit: number;
+  weather: string;
+}
+
 function App() {
-  const [selectLocation, setSelectLocation] = useState("Current Location");
-  const [data, setData] = useState();
+  const [selectLocation, setSelectLocation] =
+    useState<string>("Current Location");
+  const [data, setData] = useState<DataType>({
+    name: "",
+    celsius: 0,
+    fahrenheit: 0,
+    weather: "",
+  });
 
   useEffect(() => {
     getCurrentLocation();
@@ -37,14 +50,19 @@ function App() {
     }
   };
 
-  const getWeatherByCurrentLocation = async (lat, lon) => {
+  const getWeatherByCurrentLocation = async (lat: number, lon: number) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
 
     axiosHandler(url, "currentLocation");
   };
 
-  const selectCityHandler = (cityName) => {
-    setData();
+  const selectCityHandler = (cityName: string) => {
+    setData({
+      name: "",
+      celsius: 0,
+      fahrenheit: 0,
+      weather: "",
+    });
     setSelectLocation(cityName);
 
     if (cityName === "Current Location") {
@@ -54,13 +72,13 @@ function App() {
     }
   };
 
-  const getWeatherByCityName = async (cityName) => {
+  const getWeatherByCityName = async (cityName: string) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
 
     axiosHandler(url, "cityName");
   };
 
-  const axiosHandler = async (url, label) => {
+  const axiosHandler = async (url: string, label: string) => {
     await axios
       .get(url)
       .then((res) => {
@@ -76,7 +94,7 @@ function App() {
 
   return (
     <div className="container">
-      {data ? (
+      {data.name ? (
         <>
           <InfoBox cityImage={locationPhoto[selectLocation]} data={data} />
           <div className="buttonWrap">

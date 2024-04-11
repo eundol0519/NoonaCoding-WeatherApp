@@ -1,6 +1,10 @@
-import React from "react";
+interface PropsType {
+  cityName: string;
+  selectCityHandler: (name: string) => void;
+  selectLocation: string;
+}
 
-const Button = ({ cityName, selectCityHandler, selectLocation }) => {
+const Button = ({ cityName, selectCityHandler, selectLocation }: PropsType) => {
   return (
     <button
       key={cityName}
